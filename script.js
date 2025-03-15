@@ -64,7 +64,9 @@ const handleKeyPress = function (e) {
   // Detect AltGr key press (Alt + Control pressed simultaneously)
   const isAltGr = e.key === 'AltGraph';
 
-  speak(e.key);
+  if(e.type === 'keyup') {
+    speak(e.key);
+  }
 
   // Ignore the left Control key if AltGr is pressed
   if (isAltGr) {
