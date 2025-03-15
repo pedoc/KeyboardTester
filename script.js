@@ -64,7 +64,7 @@ const handleKeyPress = function (e) {
   // Detect AltGr key press (Alt + Control pressed simultaneously)
   const isAltGr = e.key === 'AltGraph';
 
-  if(e.type === 'keyup') {
+  if (e.type === 'keyup') {
     speak(e.key);
   }
 
@@ -250,3 +250,36 @@ slider.addEventListener('input', updateLayout);
 
 // Initial layout update based on default slider value
 updateLayout();
+
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    controlFullScreen(true);
+  } else {
+    controlFullScreen(false);
+  }
+}
+function controlFullScreen(enter) {
+  if (enter) {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    }
+  }
+  else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+}
