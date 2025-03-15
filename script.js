@@ -32,6 +32,22 @@ const changeTheme = function (themeName) {
 
 initializeTheme();
 
+function speak(text, lang = "zh-CN") {
+  const utterance = new SpeechSynthesisUtterance(text);
+  const voices = speechSynthesis.getVoices();
+  const voice = voices.find(v => v.name.includes("Microsoft") && v.lang === lang && !v.localService);
+  if (voice) {
+      utterance.voice = voice;
+  }
+
+  // utterance.rate = 1;  // 语速 (0.1 - 10)
+  // utterance.pitch = 1; // 音调 (0 - 2)
+  // utterance.volume = 1; // 音量 (0 - 1)
+
+  speechSynthesis.speak(utterance);
+}
+
+
 // ------------------- HANDLING KEY PRESS -------------------
 
 const handleKeyPress = function (e) {
@@ -42,6 +58,8 @@ const handleKeyPress = function (e) {
   // Edge case mentioned in https://github.com/Mostafa-Abbasi/KeyboardTester/issues/4
   // Detect AltGr key press (Alt + Control pressed simultaneously)
   const isAltGr = e.key === 'AltGraph';
+  
+  speak(e.key);
 
   // Ignore the left Control key if AltGr is pressed
   if (isAltGr) {
